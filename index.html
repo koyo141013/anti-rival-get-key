@@ -12,6 +12,7 @@
             box-sizing: border-box;
         }
 
+
         html,
         body {
             margin: 0;
@@ -19,8 +20,11 @@
             min-height: 100%;
         }
 
+
         body {
             min-height: 100vh;
+            width: 100%;
+
             overflow: hidden;
 
             font-family:
@@ -31,6 +35,11 @@
             color: white;
 
             position: relative;
+
+            /* ★ 화면 중앙 정렬 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
 
             background:
                 radial-gradient(
@@ -182,7 +191,7 @@
 
 
         /* =========================================
-           BINARY LAYERS
+           BINARY LAYER
            ========================================= */
 
         .binary-layer {
@@ -273,18 +282,6 @@
         }
 
 
-        /* Second binary layer */
-
-        .binary-grid.back {
-            opacity: 0.12;
-
-            transform:
-                scale(1.08);
-
-            filter: blur(0.5px);
-        }
-
-
         /* =========================================
            MOUSE LIGHT
            ========================================= */
@@ -326,7 +323,7 @@
 
 
         /* =========================================
-           CONTENT
+           MAIN CONTAINER
            ========================================= */
 
         .container {
@@ -335,7 +332,11 @@
             z-index: 5;
 
             width: 90%;
+
             max-width: 900px;
+
+            /* ★ 확실한 가로 중앙 */
+            margin: 0 auto;
 
             text-align: center;
         }
@@ -400,6 +401,8 @@
 
             justify-content: center;
 
+            align-items: center;
+
             gap: 16px;
 
             flex-wrap: wrap;
@@ -431,7 +434,9 @@
         }
 
 
-        /* Shine that follows mouse */
+        /* =========================================
+           BUTTON MOUSE SHINE
+           ========================================= */
 
         button::before {
             content: "";
@@ -480,6 +485,8 @@
         }
 
 
+        /* Premium */
+
         .premium {
             border: none;
 
@@ -493,6 +500,8 @@
                 rgba(35,50,120,0.2);
         }
 
+
+        /* Free */
 
         .free {
             border:
@@ -534,6 +543,10 @@
         }
 
 
+        /* =========================================
+           FOOTER
+           ========================================= */
+
         .footer {
             margin-top: 50px;
 
@@ -552,11 +565,18 @@
 
             body {
                 overflow-y: auto;
+
+                align-items: center;
+
+                justify-content: center;
             }
 
 
             .container {
                 width: 92%;
+
+                margin:
+                    0 auto;
             }
 
 
@@ -618,6 +638,10 @@
         }
 
 
+        /* =========================================
+           REDUCED MOTION
+           ========================================= */
+
         @media (prefers-reduced-motion: reduce) {
 
             .light {
@@ -635,6 +659,7 @@
             button {
                 transition: none;
             }
+
         }
 
     </style>
@@ -644,7 +669,9 @@
 <body>
 
 
-    <!-- Animated background -->
+    <!-- =========================================
+         BACKGROUND
+         ========================================= -->
 
     <div class="background">
 
@@ -657,7 +684,9 @@
     </div>
 
 
-    <!-- Mouse glow -->
+    <!-- =========================================
+         MOUSE GLOW
+         ========================================= -->
 
     <div
         class="mouse-light"
@@ -665,7 +694,9 @@
     </div>
 
 
-    <!-- Binary -->
+    <!-- =========================================
+         BINARY
+         ========================================= -->
 
     <div
         class="binary-layer"
@@ -679,9 +710,12 @@
     </div>
 
 
-    <!-- Main -->
+    <!-- =========================================
+         MAIN
+         ========================================= -->
 
     <div class="container">
+
 
         <div class="logo">
             ANTI RIVAL
@@ -700,6 +734,9 @@
 
         <div class="buttons">
 
+
+            <!-- Premium Key -->
+
             <button
                 class="premium"
                 onclick="location.href='key.html'">
@@ -711,6 +748,8 @@
             </button>
 
 
+            <!-- Free Key -->
+
             <button
                 class="free"
                 onclick="location.href='https://link-center.net/8373580/1QODzu8DuANE'">
@@ -721,6 +760,7 @@
 
             </button>
 
+
         </div>
 
 
@@ -728,10 +768,12 @@
             © 2026 Anti Rival
         </div>
 
+
     </div>
 
 
     <script>
+
 
         /* =========================================
            BINARY GENERATOR
@@ -794,7 +836,7 @@
 
 
         /* =========================================
-           MOUSE / TOUCH POSITION
+           POINTER
            ========================================= */
 
         const root =
@@ -812,6 +854,7 @@
             x,
             y
         ) {
+
 
             const normalizedX =
                 x / window.innerWidth -
@@ -843,14 +886,12 @@
             );
 
 
-            /* Highlight nearby binary */
+            /* =====================================
+               BINARY MOUSE EFFECT
+               ===================================== */
 
             binaryElements.forEach(
-                (element, index) => {
-
-                    if (index > 700) {
-                        return;
-                    }
+                (element) => {
 
 
                     const rect =
@@ -869,14 +910,19 @@
 
                     const distance =
                         Math.sqrt(
+
                             Math.pow(
                                 x - centerX,
                                 2
-                            ) +
+                            )
+
+                            +
+
                             Math.pow(
                                 y - centerY,
                                 2
                             )
+
                         );
 
 
@@ -884,9 +930,9 @@
 
 
                     if (
-                        distance <
-                        range
+                        distance < range
                     ) {
+
 
                         const strength =
                             1 -
@@ -919,7 +965,9 @@
                                 ${strength * 0.8}
                             )`;
 
+
                     } else {
+
 
                         element.style.opacity =
                             element.dataset.baseOpacity;
@@ -940,6 +988,8 @@
         }
 
 
+        /* Mouse */
+
         document.addEventListener(
             "mousemove",
             (event) => {
@@ -953,11 +1003,12 @@
         );
 
 
-        /* Mobile touch */
+        /* Touch */
 
         document.addEventListener(
             "touchmove",
             (event) => {
+
 
                 if (
                     !event.touches ||
@@ -983,7 +1034,14 @@
            SMOOTH PARALLAX
            ========================================= */
 
+        const binaryLayer =
+            document.getElementById(
+                "binaryLayer"
+            );
+
+
         function animate() {
+
 
             currentX +=
                 (targetX - currentX)
@@ -995,23 +1053,7 @@
                 * 0.07;
 
 
-            root.style.setProperty(
-                "--parallax-x",
-                currentX
-            );
-
-
-            root.style.setProperty(
-                "--parallax-y",
-                currentY
-            );
-
-
-            document
-                .getElementById(
-                    "binaryLayer"
-                )
-                .style.transform =
+            binaryLayer.style.transform =
                 `translate(
                     ${currentX}px,
                     ${currentY}px
@@ -1029,7 +1071,7 @@
 
 
         /* =========================================
-           BUTTON MOUSE SHINE
+           BUTTON SHINE
            ========================================= */
 
         const buttons =
@@ -1041,9 +1083,11 @@
         buttons.forEach(
             (button) => {
 
+
                 button.addEventListener(
                     "mousemove",
                     (event) => {
+
 
                         const rect =
                             button.getBoundingClientRect();
@@ -1074,9 +1118,12 @@
                 );
 
 
+                /* Mobile */
+
                 button.addEventListener(
                     "touchmove",
                     (event) => {
+
 
                         if (
                             !event.touches ||
@@ -1119,6 +1166,7 @@
 
             }
         );
+
 
     </script>
 
