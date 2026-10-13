@@ -465,6 +465,13 @@
             <div class="modal-options">
                 <button
                     type="button"
+                    onclick="goToKeyProvider('lootlabs')">
+                    <span>LootLabs (24h)</span>
+                </button>
+
+                <button
+                    class="secondary-option"
+                    type="button"
                     onclick="goToKeyProvider('linkvertise')">
                     <span>Linkvertise (24h)</span>
                 </button>
@@ -480,18 +487,16 @@
     </div>
 
     <script>
-        /*
-         * KEY PROVIDER SETTINGS
-         *
-         * Replace WORKINK_URL with your real work.ink link.
-         * The Linkvertise link below is your existing link.
-         */
+        /* KEY PROVIDER SETTINGS */
+
+        const LOOTLABS_URL =
+            "https://lootdest.org/s?ZQGq8PJz";
 
         const LINKVERTISE_URL =
-            "https://link-center.net/8373580/1QODzu8DuANE";
+            "https://link-center.net/8373580/Qme3cA4rC4LW";
 
         const WORKINK_URL =
-            "https://work.ink/your-link";
+            "https://work.ink/2MIg/anti%20enhancement";
 
         function openFreeKeyModal() {
             const modal = document.getElementById("freeKeyModal");
@@ -517,23 +522,15 @@
         }
 
         function goToKeyProvider(provider) {
-            let destination;
+            const destinations = {
+                lootlabs: LOOTLABS_URL,
+                linkvertise: LINKVERTISE_URL,
+                workink: WORKINK_URL
+            };
 
-            if (provider === "linkvertise") {
-                destination = LINKVERTISE_URL;
-            } else if (provider === "workink") {
-                destination = WORKINK_URL;
+            const destination = destinations[provider];
 
-                if (
-                    !destination ||
-                    destination === "https://work.ink/your-link"
-                ) {
-                    alert(
-                        "Please add your real work.ink URL first."
-                    );
-                    return;
-                }
-            } else {
+            if (!destination) {
                 return;
             }
 
