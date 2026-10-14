@@ -380,6 +380,82 @@
             line-height: 1.5;
         }
 
+
+        .script-copy-section {
+            width: min(100%, 760px);
+            margin: 28px auto 0;
+            padding: 22px;
+            border: 1px solid rgba(190,205,255,.22);
+            border-radius: 20px;
+            background: linear-gradient(145deg, rgba(255,255,255,.09), rgba(100,120,220,.045));
+            box-shadow: 0 18px 55px rgba(3,8,30,.24), inset 0 1px 0 rgba(255,255,255,.07);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            text-align: left;
+        }
+
+        .script-copy-title {
+            margin: 0 0 14px;
+            text-align: center;
+            font-size: 19px;
+            font-weight: 900;
+            letter-spacing: 3px;
+            color: #dce3ff;
+        }
+
+        .script-copy-row {
+            display: flex;
+            align-items: stretch;
+            gap: 10px;
+        }
+
+        .script-code {
+            flex: 1;
+            min-width: 0;
+            margin: 0;
+            padding: 15px;
+            overflow-x: auto;
+            border: 1px solid rgba(190,205,255,.18);
+            border-radius: 12px;
+            background: rgba(5,9,28,.55);
+            color: #e5eaff;
+            font: 13px/1.6 Consolas, "Courier New", monospace;
+            white-space: pre;
+            user-select: text;
+        }
+
+        .script-copy-button {
+            min-width: 112px;
+            padding: 12px 18px;
+            border: 1px solid rgba(255,255,255,.28);
+            border-radius: 12px;
+            background: linear-gradient(135deg, #e7ebff, #aebfff);
+            color: #263568;
+            font-weight: 900;
+            cursor: pointer;
+            transition: transform .2s ease, box-shadow .2s ease;
+        }
+
+        .script-copy-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 28px rgba(100,125,255,.25);
+        }
+
+        .script-copy-status {
+            min-height: 18px;
+            margin: 10px 0 0;
+            text-align: right;
+            color: #c9d4ff;
+            font-size: 12px;
+        }
+
+        @media (max-width: 560px) {
+            .script-copy-section { padding: 16px 12px; }
+            .script-copy-row { flex-direction: column; }
+            .script-copy-button { width: 100%; }
+            .script-code { font-size: 11px; }
+        }
+
         .footer {
             margin-top: 42px;
             font-size: 13px;
@@ -579,6 +655,16 @@
             </button>
         </div>
 
+
+        <section class="script-copy-section" aria-labelledby="scriptCopyTitle">
+            <h2 class="script-copy-title" id="scriptCopyTitle">SCRIPT</h2>
+            <div class="script-copy-row">
+                <pre class="script-code" id="scriptCode"></pre>
+                <button class="script-copy-button" type="button" id="copyScriptButton" onclick="copyScriptCode()">Copy</button>
+            </div>
+            <p class="script-copy-status" id="scriptCopyStatus" aria-live="polite"></p>
+        </section>
+
         <section class="showcase" aria-labelledby="rivalsTitle">
             <p class="showcase-kicker">Featured Script</p>
             <h2 id="rivalsTitle">RIVALS BEST SCRIPT</h2>
@@ -661,6 +747,41 @@
     </div>
 
     <script>
+
+        const SCRIPT_CODE = 'loadstring(game:HttpGet("https://raw.githubusercontent.com/koyo141013/anti-enhancement/refs/heads/main/anti%20enhancement"))()';
+
+        document.getElementById("scriptCode").textContent = SCRIPT_CODE;
+
+        async function copyScriptCode() {
+            const status = document.getElementById("scriptCopyStatus");
+            const button = document.getElementById("copyScriptButton");
+
+            try {
+                if (navigator.clipboard && window.isSecureContext) {
+                    await navigator.clipboard.writeText(SCRIPT_CODE);
+                } else {
+                    const textarea = document.createElement("textarea");
+                    textarea.value = SCRIPT_CODE;
+                    textarea.style.position = "fixed";
+                    textarea.style.opacity = "0";
+                    document.body.appendChild(textarea);
+                    textarea.select();
+                    const copied = document.execCommand("copy");
+                    textarea.remove();
+                    if (!copied) throw new Error("Copy command failed");
+                }
+
+                status.textContent = "Copied to clipboard!";
+                button.textContent = "Copied!";
+                window.setTimeout(() => {
+                    button.textContent = "Copy";
+                    status.textContent = "";
+                }, 1800);
+            } catch (error) {
+                status.textContent = "Copy failed — select the script text and copy it manually.";
+            }
+        }
+
         /* KEY PROVIDER SETTINGS */
 
         const LOOTLABS_URL =
