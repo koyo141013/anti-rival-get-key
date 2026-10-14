@@ -381,6 +381,108 @@
         }
 
 
+
+        .feature-overview {
+            width: min(100%, 760px);
+            margin: 54px auto 0;
+            padding: 30px;
+            text-align: left;
+            border: 1px solid rgba(166,190,255,.28);
+            border-radius: 24px;
+            background:
+                radial-gradient(circle at 0% 0%, rgba(91,117,255,.18), transparent 38%),
+                linear-gradient(145deg, rgba(255,255,255,.085), rgba(25,36,85,.42));
+            box-shadow: 0 25px 75px rgba(1,5,25,.34), inset 0 1px 0 rgba(255,255,255,.08);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            position: relative;
+            overflow: hidden;
+        }
+        .feature-overview::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 8%; width: 84%; height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(157,181,255,.9), transparent);
+        }
+        .feature-eyebrow {
+            margin: 0 0 9px;
+            color: #aebfff;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+        .feature-overview h2 {
+            margin: 0;
+            font-size: clamp(24px, 4vw, 34px);
+            letter-spacing: .5px;
+            text-shadow: 0 0 28px rgba(116,145,255,.3);
+        }
+        .feature-intro {
+            margin: 12px 0 25px;
+            color: rgba(230,236,255,.68);
+            line-height: 1.7;
+            font-size: 14px;
+        }
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 13px;
+        }
+        .feature-card {
+            padding: 19px;
+            border: 1px solid rgba(175,193,255,.15);
+            border-radius: 16px;
+            background: linear-gradient(145deg, rgba(255,255,255,.055), rgba(7,13,42,.3));
+            transition: transform .22s ease, border-color .22s ease, background .22s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(166,190,255,.38);
+            background: linear-gradient(145deg, rgba(105,130,255,.12), rgba(7,13,42,.35));
+        }
+        .feature-card h3 {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            margin: 0 0 11px;
+            color: #e4eaff;
+            font-size: 15px;
+            line-height: 1.4;
+        }
+        .feature-card h3 span {
+            display: inline-grid;
+            place-items: center;
+            flex: 0 0 29px;
+            width: 29px;
+            height: 29px;
+            border-radius: 9px;
+            color: #dbe3ff;
+            background: rgba(126,151,255,.16);
+            border: 1px solid rgba(165,185,255,.19);
+            font-size: 14px;
+        }
+        .feature-card ul {
+            margin: 0;
+            padding-left: 17px;
+            color: rgba(227,233,255,.7);
+            font-size: 12.5px;
+            line-height: 1.75;
+        }
+        .feature-card li { padding-left: 2px; margin: 3px 0; }
+        .feature-card li::marker { color: #9caeff; }
+        .feature-footnote {
+            margin: 20px 2px 0;
+            color: rgba(221,230,255,.45);
+            font-size: 11px;
+            line-height: 1.6;
+        }
+        @media (max-width: 600px) {
+            .feature-overview { padding: 22px 15px; margin-top: 40px; }
+            .feature-grid { grid-template-columns: 1fr; }
+            .feature-card { padding: 17px; }
+        }
+
         .script-copy-section {
             width: min(100%, 760px);
             margin: 28px auto 0;
@@ -663,6 +765,69 @@
                 <button class="script-copy-button" type="button" id="copyScriptButton" onclick="copyScriptCode()">Copy</button>
             </div>
             <p class="script-copy-status" id="scriptCopyStatus" aria-live="polite"></p>
+        </section>
+
+
+        <section class="feature-overview" aria-labelledby="featureOverviewTitle">
+            <p class="feature-eyebrow">Feature Overview</p>
+            <h2 id="featureOverviewTitle">SCRIPT FEATURES</h2>
+            <p class="feature-intro">Explore the systems and customization options described for Anti Enhancement. Features may depend on the game version and configuration.</p>
+
+            <div class="feature-grid">
+                <article class="feature-card">
+                    <h3><span>01</span> Security &amp; Authentication</h3>
+                    <ul>
+                        <li><strong>Anti-Kick &amp; Client Alert:</strong> Describes hook-based handling of client detection and kick events, including a simulated <code>ClientAlert</code> remote event.</li>
+                        <li><strong>Key System:</strong> Supports key verification through providers such as Linkvertise or work.ink and local storage in <code>AntiRival_SavedKey.json</code>.</li>
+                    </ul>
+                </article>
+
+                <article class="feature-card">
+                    <h3><span>02</span> Combat &amp; Aim Features</h3>
+                    <ul>
+                        <li><strong>Silent Aim:</strong> Describes FOV-based target selection and <code>UseItem.FireServer</code> packet handling.</li>
+                        <li><strong>Aimbot:</strong> Includes configurable head/body targeting, smooth cursor movement, visibility checks, and anti-katana logic.</li>
+                        <li><strong>Ragebot:</strong> Describes rapid auto-fire loops, stability and shooting-frame adjustments, plus far-desync teleport behavior when no enemies are alive.</li>
+                        <li><strong>Other Tools:</strong> Triggerbot, aura, and projectile wallbang options.</li>
+                    </ul>
+                </article>
+
+                <article class="feature-card">
+                    <h3><span>03</span> Weapon Modifiers</h3>
+                    <ul>
+                        <li><strong>No Spread &amp; Recoil Removal:</strong> Options described as reducing or removing weapon spread and recoil.</li>
+                        <li><strong>Fast Shooting &amp; Projectile:</strong> Fast-fire and full-auto options, projectile-speed adjustments, always-backstab settings, and cooldown changes.</li>
+                    </ul>
+                </article>
+
+                <article class="feature-card">
+                    <h3><span>04</span> Visuals &amp; ESP</h3>
+                    <ul>
+                        <li><strong>Comprehensive ESP:</strong> Enemy boxes, names, health, distance, ranks, winstreaks, player numbers, held weapons, deflecting status, chams, tracers, and skeletons.</li>
+                        <li><strong>Live Preview:</strong> ESP preview with customizable colors for visual elements.</li>
+                        <li><strong>Skybox &amp; Shaders:</strong> Kicia skybox presets and effects such as blur, bloom, blizzard, and aurora particles.</li>
+                    </ul>
+                </article>
+
+                <article class="feature-card">
+                    <h3><span>05</span> Movement &amp; Character</h3>
+                    <ul>
+                        <li><strong>Speed &amp; Fly:</strong> Configurable walk speed, flight speed, and infinite-jump options.</li>
+                        <li><strong>Physics Options:</strong> Noclip, forced third-person view, and an automated 50k teleporter.</li>
+                    </ul>
+                </article>
+
+                <article class="feature-card">
+                    <h3><span>06</span> Spoofers &amp; Utilities</h3>
+                    <ul>
+                        <li><strong>Player Spoofing:</strong> Client-side display-name, enemy-name, level, winstreak, ranked ELO, nametag, and influencer/employee-tag options.</li>
+                        <li><strong>Device Spoofing:</strong> Computer, Mobile, Console, and VR environment labels.</li>
+                        <li><strong>Auto Loadout &amp; Queue:</strong> Automatic loadout selection and matchmaking queue joining.</li>
+                        <li><strong>Hit Notifications &amp; Management:</strong> Top-right damage popups, configuration management, auto-load, and script unloading.</li>
+                    </ul>
+                </article>
+            </div>
+            <p class="feature-footnote">Note: This is a descriptive feature list, not a guarantee that every option works in every game version. Third-party game modifications may violate game rules or result in account penalties.</p>
         </section>
 
         <section class="showcase" aria-labelledby="rivalsTitle">
