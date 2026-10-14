@@ -365,9 +365,9 @@
         .showcase-video {
             display: block;
             width: 100%;
-            max-height: 560px;
+            height: auto;
             aspect-ratio: 16 / 9;
-            object-fit: contain;
+            border: 0;
             border-radius: 12px;
             background: rgba(5,9,28,.7);
         }
@@ -594,19 +594,17 @@
             <section class="showcase-video-section" aria-labelledby="videoTitle">
                 <h3 class="video-heading" id="videoTitle">SCRIPT SHOWCASE VIDEO</h3>
                 <div class="showcase-video-frame">
-                    <video
+                    <iframe
                         class="showcase-video"
-                        controls
-                        playsinline
-                        preload="metadata"
-                        aria-label="Anti Enhancement script showcase video"
-                    >
-                        <source src="https://cdn.discordapp.com/attachments/1553212532368605244/1559921929648083085/1014.mp4?ex=6ad0d601&amp;is=6acf8481&amp;hm=c8537c350ec4108b8dcbe2be97e16ce57f6c3be501561648dcf2c162123c372f&amp;" type="video/mp4">
-                        Your browser does not support embedded video. 
-                        <a href="https://cdn.discordapp.com/attachments/1553212532368605244/1559921929648083085/1014.mp4?ex=6ad0d601&amp;is=6acf8481&amp;hm=c8537c350ec4108b8dcbe2be97e16ce57f6c3be501561648dcf2c162123c372f&amp;" target="_blank" rel="noopener noreferrer">Open the video</a>.
-                    </video>
+                        src="https://www.youtube-nocookie.com/embed/G-__RGW4Hyo"
+                        title="Anti Enhancement script showcase video"
+                        loading="lazy"
+                        referrerpolicy="strict-origin-when-cross-origin"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen>
+                    </iframe>
                 </div>
-                <p class="video-note">Press play to watch the preview.</p>
+                <p class="video-note">유튜브 플레이어에서 영상을 재생할 수 있어.</p>
             </section>
         </section>
 
