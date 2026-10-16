@@ -731,6 +731,8 @@
             top: 20px;
             right: 24px;
             z-index: 15;
+            display: flex;
+            gap: 10px;
         }
 
         .status-tab {
@@ -838,9 +840,28 @@
             box-shadow: 0 0 12px rgba(85,245,155,.8);
         }
 
+        .update-card {
+            width: min(100%, 560px);
+            max-height: min(82vh, 720px);
+            overflow-y: auto;
+        }
+        .update-content {
+            color: rgba(235,240,255,.86);
+            font-size: 13px;
+            line-height: 1.65;
+        }
+        .update-content h3 {
+            margin: 20px 0 8px;
+            color: #dce5ff;
+            font-size: 15px;
+        }
+        .update-content h3:first-child { margin-top: 0; }
+        .update-content ul { margin: 0; padding-left: 19px; }
+        .update-content li { margin: 5px 0; }
         @media (max-width: 600px) {
-            .status-nav { top: 12px; right: 12px; }
-            .status-tab { padding: 10px 14px; font-size: 11px; }
+            .status-nav { top: 12px; right: 12px; gap: 6px; }
+            .status-tab { padding: 10px 12px; font-size: 10px; letter-spacing: 1px; }
+            .update-card { padding: 25px 18px; }
         }
 
     </style>
@@ -851,7 +872,10 @@
     <!-- STATUS TAB -->
     <nav class="status-nav" aria-label="Main navigation">
         <button type="button" class="status-tab" onclick="openStatusModal()">
-            <span>STATUS</span>
+            <span>SCRIPT</span>
+        </button>
+        <button type="button" class="status-tab update-tab" onclick="openUpdateModal()">
+            <span>UPDATE</span>
         </button>
     </nav>
 
@@ -870,7 +894,7 @@
                 aria-label="Close"
                 onclick="closeStatusModal()">×</button>
 
-            <h2 id="statusTitle">SYSTEM STATUS</h2>
+            <h2 id="statusTitle">SYSTEM SCRIPT</h2>
 
             <div class="status-row">
                 <span class="status-label">Status</span>
@@ -887,6 +911,34 @@
         </section>
     </div>
 
+
+    <!-- UPDATE POPUP -->
+    <div class="status-overlay" id="updateModal" role="dialog" aria-modal="true"
+         aria-labelledby="updateTitle" onclick="handleUpdateBackdrop(event)">
+        <section class="status-card update-card">
+            <button class="status-close" type="button" aria-label="Close"
+                    onclick="closeUpdateModal()">×</button>
+            <h2 id="updateTitle">ANTI ENHANCEMENT v0.2.8.6</h2>
+
+            <div class="update-content">
+                <h3>1. 레이지봇 — 클릭 안 되던 문제</h3>
+                <ul>
+                    <li>원인: 켜두면 StartShooting / Tool:Activate를 계속 호출해 마우스 입력을 방해하던 문제.</li>
+                    <li>변경: LMB를 누르고 있을 때만 자동 사격하도록 변경.</li>
+                    <li>조준 주입(UseItem 훅)은 레이지봇 ON 동안 유지.</li>
+                    <li>VirtualInputManager는 사용하지 않음.</li>
+                </ul>
+
+                <h3>2. ESP — 전체 미작동</h3>
+                <ul>
+                    <li>Drawing API 없이도 표시되도록 Highlight + BillboardGui 기반으로 변경.</li>
+                    <li>Drawing API가 지원되는 환경에서는 박스와 트레이서도 추가 표시.</li>
+                    <li>표시 항목: 이름, HP, 거리, 무기, Rank, Winstreak.</li>
+                    <li>ESP 마스터 ON 시 Box + Name + Health를 기본 활성화.</li>
+                </ul>
+            </div>
+        </section>
+    </div>
 
     <div class="background">
         <div class="light one"></div>
@@ -1324,14 +1376,27 @@
         }
 
         function handleStatusBackdrop(event) {
-            if (event.target.id === "statusModal") {
-                closeStatusModal();
-            }
+            if (event.target.id === "statusModal") closeStatusModal();
+        }
+
+        function openUpdateModal() {
+            const modal = document.getElementById("updateModal");
+            modal.classList.add("show");
+            modal.querySelector(".status-close").focus();
+        }
+
+        function closeUpdateModal() {
+            document.getElementById("updateModal").classList.remove("show");
+        }
+
+        function handleUpdateBackdrop(event) {
+            if (event.target.id === "updateModal") closeUpdateModal();
         }
 
         document.addEventListener("keydown", function(event) {
             if (event.key === "Escape") {
                 closeStatusModal();
+                closeUpdateModal();
             }
         });
 
